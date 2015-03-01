@@ -94,7 +94,7 @@ void GLWidget::initializeGL()
     initializeOpenGLFunctions();
     glClearColor(0, 0, 0, 0);
 
-    std::string baseDir = "../LightEditor/";
+    std::string baseDir = "../src/";
     m_program.addShaderFromSourceCode(QOpenGLShader::Vertex,
                                       LoadShaderText(baseDir+"simple-vert.glsl"));
     m_program.addShaderFromSourceCode(QOpenGLShader::Fragment,
