@@ -19,7 +19,8 @@ SOURCES += main.cpp \
     plyreader.cpp \
     meshreader.cpp \
     testreader.cpp \
-    process_mesh.cpp
+    process_mesh.cpp \
+    lightcontrol.cpp
 
 HEADERS  += mainwindow.h \
     glwidget.h \
@@ -27,7 +28,8 @@ HEADERS  += mainwindow.h \
     plyreader.h \
     meshreader.h \
     testreader.h \
-    process_mesh.h
+    process_mesh.h \
+    lightcontrol.h
 
 FORMS    += mainwindow.ui
 

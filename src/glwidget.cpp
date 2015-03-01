@@ -1,10 +1,12 @@
 #include "glwidget.h"
 #include "helper_glsl.h"
+#include "lightcontrol.h"
 #include <iostream>
 #include <string>
 #include <fstream>
 #include <QString>
 #include <QMouseEvent>
+
 
 GLWidget::GLWidget(QWidget *parent) :
     QOpenGLWidget(parent),
@@ -151,6 +153,9 @@ void GLWidget::paintGL()
     m_program.setUniformValue(m_program.uniformLocation("viewMat"), m_viewMatrix);
     m_program.setUniformValue(m_program.uniformLocation("modelMat"), m_worldMatrix);
     m_program.setUniformValue(m_program.uniformLocation("normalMat"), normalMatrix);
+
+    LightControl lc;
+    lc.SetUniformValues(m_program);
 
     m_vertexArray.bind();
     glDrawElements(GL_TRIANGLES, m_mesh->getIndexData().size(),
