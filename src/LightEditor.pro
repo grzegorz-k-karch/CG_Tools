@@ -20,7 +20,8 @@ SOURCES += main.cpp \
     meshreader.cpp \
     testreader.cpp \
     process_mesh.cpp \
-    lightcontrol.cpp
+    lightcontrol.cpp \
+    clickablelabel.cpp
 
 HEADERS  += mainwindow.h \
     glwidget.h \
@@ -29,7 +30,8 @@ HEADERS  += mainwindow.h \
     meshreader.h \
     testreader.h \
     process_mesh.h \
-    lightcontrol.h
+    lightcontrol.h \
+    clickablelabel.h
 
 FORMS    += mainwindow.ui
 

@@ -1,10 +1,12 @@
 #include "mainwindow.h"
 #include "glwidget.h"
+#include "clickablelabel.h"
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QWidget>
 #include <QPalette>
+#include <QColorDialog>
 #include <QPushButton>
 
 MainWindow::MainWindow()
@@ -19,22 +21,17 @@ MainWindow::MainWindow()
     lightColorLabel->setText("Light color");
     lightEditorLayout->addWidget(lightColorLabel);
 
-    QLabel *lightColorBox = new QLabel(this);
+    ClickableLabel *lightColorBox = new ClickableLabel();
     lightColorBox->setFrameStyle(QFrame::StyledPanel | QFrame::Plain);
     lightColorBox->setAutoFillBackground(true);
     lightColorBox->setLineWidth(3);
-
+    lightEditorLayout->addWidget(lightColorBox);
     QPalette *palette = new QPalette;
     palette->setColor(QPalette::Background,Qt::blue);
     lightColorBox->setPalette(*palette);
 
-    lightEditorLayout->addWidget(lightColorBox);
-
-    QPushButton *colorButton = new QPushButton(this);
-    colorButton->setFlat(true);
-
-    lightEditorLayout->addWidget(colorButton);
-//http://qt-project.org/wiki/Make-a-QLabel-Clickable
+    QColorDialog *colorDialog = new QColorDialog(this);
+    connect(lightColorBox,SIGNAL(clicked()),colorDialog,SLOT(show()));
 
     mainLayout->addLayout(lightEditorLayout);
     setCentralWidget(new QWidget);
