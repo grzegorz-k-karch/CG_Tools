@@ -5,6 +5,7 @@
 #define CLICKABLELABEL_H
 
 #include <QLabel>
+#include <QColor>
 
 class ClickableLabel : public QLabel
 {
@@ -16,9 +17,11 @@ public:
 
 signals:
     void clicked();
-
+    void colorChanged(const QColor &color);
+public slots:
+    void setColor(const QColor &color);
 protected:
-    void mousePressEvent(QMouseEvent *event) ;
+    void mousePressEvent(QMouseEvent *event);
 };
 
 #endif // CLICKABLELABEL_H

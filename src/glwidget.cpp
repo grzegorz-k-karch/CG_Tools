@@ -17,6 +17,8 @@ GLWidget::GLWidget(QWidget *parent) :
     m_indexBuffer(QOpenGLBuffer::IndexBuffer)
 {
     m_mesh = new Mesh;
+    m_lightControl = new LightControl;
+
     m_zTrans = -3.0f;
     m_angle = 0.0;
 }
@@ -24,6 +26,7 @@ GLWidget::GLWidget(QWidget *parent) :
 GLWidget::~GLWidget()
 {
     delete m_mesh;
+    delete m_lightControl;
 }
 
 void GLWidget::initializeVertexArray()
@@ -154,8 +157,7 @@ void GLWidget::paintGL()
     m_program.setUniformValue(m_program.uniformLocation("modelMat"), m_worldMatrix);
     m_program.setUniformValue(m_program.uniformLocation("normalMat"), normalMatrix);
 
-    LightControl lc;
-    lc.SetUniformValues(m_program);
+    m_lightControl->SetUniformValues(m_program);
 
     m_vertexArray.bind();
     glDrawElements(GL_TRIANGLES, m_mesh->getIndexData().size(),

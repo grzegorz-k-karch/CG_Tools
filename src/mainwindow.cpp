@@ -7,7 +7,8 @@
 #include <QWidget>
 #include <QPalette>
 #include <QColorDialog>
-#include <QPushButton>
+
+#include "lightcontrol.h"
 
 MainWindow::MainWindow()
 {
@@ -21,17 +22,25 @@ MainWindow::MainWindow()
     lightColorLabel->setText("Light color");
     lightEditorLayout->addWidget(lightColorLabel);
 
-    ClickableLabel *lightColorBox = new ClickableLabel();
+    QPalette *palette = new QPalette;
+    palette->setColor(QPalette::Background,Qt::white);
+
+    ClickableLabel *lightColorBox = new ClickableLabel(this);
     lightColorBox->setFrameStyle(QFrame::StyledPanel | QFrame::Plain);
     lightColorBox->setAutoFillBackground(true);
     lightColorBox->setLineWidth(3);
     lightEditorLayout->addWidget(lightColorBox);
-    QPalette *palette = new QPalette;
-    palette->setColor(QPalette::Background,Qt::blue);
+
     lightColorBox->setPalette(*palette);
+    delete palette;
 
     QColorDialog *colorDialog = new QColorDialog(this);
     connect(lightColorBox,SIGNAL(clicked()),colorDialog,SLOT(show()));
+    connect(colorDialog,SIGNAL(colorSelected(QColor)),lightColorBox,SLOT(setColor(QColor)));
+
+    LightControl *lightControl = new LightControl(this);
+    glwidget->setLightControl(lightControl);
+    connect(lightColorBox,SIGNAL(colorChanged(QColor)),lightControl,SLOT(setLightColor(QColor)));
 
     mainLayout->addLayout(lightEditorLayout);
     setCentralWidget(new QWidget);
@@ -42,3 +51,4 @@ MainWindow::~MainWindow()
 {
 
 }
+

@@ -4,13 +4,18 @@
 #include <QOpenGLFunctions>
 #include <QVector4D>
 #include <QOpenGLShaderProgram>
+#include <QColor>
+#include <QWidget>
 
-class LightControl
+class LightControl : public QWidget
 {
+    Q_OBJECT
 public:
-    LightControl();
+    LightControl(QWidget *parent = 0);
     ~LightControl();
     void SetUniformValues(QOpenGLShaderProgram &m_program) const;
+public slots:
+    void setLightColor(const QColor &color);
 private:
     GLfloat m_k_ambient;
     GLfloat m_k_diffuse;

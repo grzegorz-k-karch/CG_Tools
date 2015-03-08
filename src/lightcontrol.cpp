@@ -1,6 +1,7 @@
 #include "lightcontrol.h"
 
-LightControl::LightControl()
+LightControl::LightControl(QWidget *parent)
+    : QWidget(parent)
 {
     m_k_ambient = 0.25f;
     m_k_diffuse = 0.5f;
@@ -13,6 +14,14 @@ LightControl::LightControl()
 LightControl::~LightControl()
 {
 
+}
+
+void LightControl::setLightColor(const QColor &color)
+{
+    m_lightColor.setX(color.redF());
+    m_lightColor.setX(color.greenF());
+    m_lightColor.setX(color.blueF());
+    m_lightColor.setX(1.0f);
 }
 
 void LightControl::SetUniformValues(QOpenGLShaderProgram &m_program) const

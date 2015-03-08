@@ -12,6 +12,7 @@
 #include <string>
 
 #include "mesh.h"
+#include "lightcontrol.h"
 
 class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions
 {
@@ -25,6 +26,7 @@ public:
                      const QVector<GLfloat> &normal_data,
                      const QVector<GLfloat> &color_data,
                      const QVector<GLuint> &index_data);
+    void setLightControl(LightControl *lightControl) { m_lightControl = lightControl; }
 protected:
     void initializeGL() Q_DECL_OVERRIDE;
     void paintGL() Q_DECL_OVERRIDE;
@@ -64,6 +66,7 @@ private:
     QQuaternion rotation;
 
     Mesh *m_mesh;
+    LightControl *m_lightControl;
 };
 
 #endif // GLWIDGET_H
