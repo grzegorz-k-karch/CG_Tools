@@ -26,7 +26,6 @@ GLWidget::GLWidget(QWidget *parent) :
 GLWidget::~GLWidget()
 {
     delete m_mesh;
-    delete m_lightControl;
 }
 
 void GLWidget::initializeVertexArray()

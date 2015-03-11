@@ -1,4 +1,5 @@
 #include "lightcontrol.h"
+#include <iostream>
 
 LightControl::LightControl(QWidget *parent)
     : QWidget(parent)
@@ -19,9 +20,9 @@ LightControl::~LightControl()
 void LightControl::setLightColor(const QColor &color)
 {
     m_lightColor.setX(color.redF());
-    m_lightColor.setX(color.greenF());
-    m_lightColor.setX(color.blueF());
-    m_lightColor.setX(1.0f);
+    m_lightColor.setY(color.greenF());
+    m_lightColor.setZ(color.blueF());
+    m_lightColor.setW(1.0f);
 }
 
 void LightControl::SetUniformValues(QOpenGLShaderProgram &m_program) const

@@ -17,8 +17,6 @@ void main(void)
     vec3 N = normalize(in_normal.xyz);
     vec3 L = in_lightDir.xyz;
 
-    vec4 lightColor = vec4(1.0);
-
     vec4 color = k_a*lightColor*in_color;
 
     float diffuse = max(0.0, dot(N, L));

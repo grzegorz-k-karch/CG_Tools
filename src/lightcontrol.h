@@ -14,6 +14,7 @@ public:
     LightControl(QWidget *parent = 0);
     ~LightControl();
     void SetUniformValues(QOpenGLShaderProgram &m_program) const;
+    QVector4D m_lightColor;
 public slots:
     void setLightColor(const QColor &color);
 private:
@@ -21,7 +22,7 @@ private:
     GLfloat m_k_diffuse;
     GLfloat m_k_specular;
     GLfloat m_speculat_exp;
-    QVector4D m_lightColor;
+
     QVector4D m_lightPos;
 };
 
