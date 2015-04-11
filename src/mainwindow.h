@@ -13,6 +13,9 @@ public:
     explicit MainWindow();
     ~MainWindow();
 
+public slots:
+    void fileOpen();
+
 private:
     GLWidget *glwidget;
 };

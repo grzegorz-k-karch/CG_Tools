@@ -7,11 +7,23 @@
 #include <QWidget>
 #include <QPalette>
 #include <QColorDialog>
-
+#include <QMenuBar>
+#include <QMenu>
+#include <QAction>
+#include <QFileDialog>
 #include "lightcontrol.h"
+#include <iostream>
 
 MainWindow::MainWindow()
 {
+    QMenu *fileMenu = menuBar()->addMenu(tr("&File"));
+    QAction *action;
+
+    action = new QAction("Open File...", this);
+    action->setShortcuts(QKeySequence::Open); //setShortcut(tr("CTRL+O"));
+    connect(action, SIGNAL(triggered()), this, SLOT(fileOpen()));
+    fileMenu->addAction(action);
+
     glwidget = new GLWidget;
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->addWidget(glwidget);
@@ -52,3 +64,9 @@ MainWindow::~MainWindow()
 
 }
 
+void MainWindow::fileOpen()
+{
+    QString fileName = QFileDialog::getOpenFileName(this);
+    if (!fileName.isEmpty())
+        std::cout << "File: " << fileName.toStdString() << std::endl;
+}

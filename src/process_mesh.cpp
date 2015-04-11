@@ -23,6 +23,7 @@ Vertex_t make_Vertex_t(float x, float y, float z)
     v.z = z;
     return v;
 }
+
 Vertex_t operator-(Vertex_t a, Vertex_t b)
 {
     return make_Vertex_t(a.x - b.x, a.y - b.y, a.z - b.z);
