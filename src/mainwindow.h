@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 class GLWidget;
+class QMenu;
 
 class MainWindow : public QMainWindow
 {
@@ -13,11 +14,13 @@ public:
     explicit MainWindow();
     ~MainWindow();
 
-public slots:
+private slots:
     void fileOpen();
 
 private:
     GLWidget *glwidget;
+    QMenu *fileMenu;
+    QMenu *helpMenu;
 };
 
 #endif // MAINWINDOW_H

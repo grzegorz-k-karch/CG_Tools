@@ -13,6 +13,7 @@
 
 #include "mesh.h"
 #include "lightcontrol.h"
+#include "trackball.h"
 
 class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions
 {
@@ -32,6 +33,7 @@ protected:
     void paintGL() Q_DECL_OVERRIDE;
     void resizeGL(int width, int height) Q_DECL_OVERRIDE;
     void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
     void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
 
     GLuint CreateShaderProgram(const std::string vertShaderFileName,
@@ -64,6 +66,7 @@ private:
     QVector3D rotationAxis;
     qreal m_angle;
     QQuaternion rotation;
+    TrackBall m_trackBall;
 
     Mesh *m_mesh;
     LightControl *m_lightControl;

@@ -16,14 +16,6 @@
 
 MainWindow::MainWindow()
 {
-    QMenu *fileMenu = menuBar()->addMenu(tr("&File"));
-    QAction *action;
-
-    action = new QAction("Open File...", this);
-    action->setShortcuts(QKeySequence::Open); //setShortcut(tr("CTRL+O"));
-    connect(action, SIGNAL(triggered()), this, SLOT(fileOpen()));
-    fileMenu->addAction(action);
-
     glwidget = new GLWidget;
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->addWidget(glwidget);
@@ -57,6 +49,20 @@ MainWindow::MainWindow()
     mainLayout->addLayout(lightEditorLayout);
     setCentralWidget(new QWidget);
     centralWidget()->setLayout(mainLayout);
+
+
+    fileMenu = menuBar()->addMenu(tr("&File"));
+    helpMenu = menuBar()->addMenu(tr("&Help"));
+
+    QAction *action;
+
+    action = new QAction("Open File...", this);
+    action->setShortcuts(QKeySequence::Open);
+    action->setStatusTip(tr("Open an existing file"));
+    connect(action, SIGNAL(triggered()), this, SLOT(fileOpen()));
+    fileMenu->addAction(action);
+
+    (void)statusBar();
 }
 
 MainWindow::~MainWindow()

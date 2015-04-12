@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui opengl
+QT       += widgets core opengl #gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -21,7 +21,8 @@ SOURCES += main.cpp \
     testreader.cpp \
     process_mesh.cpp \
     lightcontrol.cpp \
-    clickablelabel.cpp
+    clickablelabel.cpp \
+    trackball.cpp
 
 HEADERS  += mainwindow.h \
     glwidget.h \
@@ -31,9 +32,10 @@ HEADERS  += mainwindow.h \
     testreader.h \
     process_mesh.h \
     lightcontrol.h \
-    clickablelabel.h
+    clickablelabel.h \
+    trackball.h
 
-FORMS    += mainwindow.ui
+# FORMS    += mainwindow.ui
 
 DISTFILES += \
     simple-frag.glsl \

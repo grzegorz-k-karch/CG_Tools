@@ -6,7 +6,7 @@
 #include <fstream>
 #include <QString>
 #include <QMouseEvent>
-
+#include <QPointF>
 
 GLWidget::GLWidget(QWidget *parent) :
     QOpenGLWidget(parent),
@@ -21,6 +21,8 @@ GLWidget::GLWidget(QWidget *parent) :
 
     m_zTrans = -3.0f;
     m_angle = 0.0;
+
+    m_trackBall = TrackBall(TrackBall::Sphere);
 }
 
 GLWidget::~GLWidget()
@@ -115,16 +117,42 @@ void GLWidget::initializeGL()
 void GLWidget::mousePressEvent(QMouseEvent *event)
 {
     m_mouseLastPos = event->pos();
+
+    QPointF viewPos;
+    viewPos.setX(double(event->pos().rx())/width()*2.0 - 1.0);
+    viewPos.setY(double(event->pos().ry())/height()*2.0 - 1.0);
+
+    m_trackBall.push(viewPos, QQuaternion());
+}
+
+void GLWidget::mouseReleaseEvent(QMouseEvent *event)
+{
+    m_mouseLastPos = event->pos();
+
+    QPointF viewPos;
+    viewPos.setX(double(event->pos().rx())/width()*2.0 - 1.0);
+    viewPos.setY(double(event->pos().ry())/height()*2.0 - 1.0);
+
+    m_trackBall.push(viewPos, QQuaternion());
 }
 
 void GLWidget::mouseMoveEvent(QMouseEvent *event)
 {
     if (event->buttons() & Qt::LeftButton) {
+
         QVector2D diff = QVector2D(event->pos() - m_mouseLastPos);
         QVector3D n = QVector3D(diff.y(), diff.x(), 0.0).normalized();
         rotationAxis = n.normalized();
         m_angle = diff.length() / 10.0;
-    } else if (event->buttons() & Qt::RightButton) {
+
+        QPointF viewPos;
+        viewPos.setX(double(event->pos().rx())/width()*2.0 - 1.0);
+        viewPos.setY(double(event->pos().ry())/height()*2.0 - 1.0);
+
+        m_trackBall.move(viewPos, QQuaternion());
+    }
+    else if (event->buttons() & Qt::RightButton) {
+
         int dy = event->y() - m_mouseLastPos.y();
         m_zTrans += dy*0.025f;
     }
@@ -145,7 +173,9 @@ void GLWidget::paintGL()
     glEnable(GL_DEPTH_TEST);
 
     rotation = QQuaternion::fromAxisAndAngle(rotationAxis, m_angle);
-    m_worldMatrix.rotate(rotation);
+//    m_worldMatrix.rotate(rotation);
+
+    m_worldMatrix.rotate(m_trackBall.rotation());
     m_viewMatrix.setToIdentity();
     m_viewMatrix.translate(0.0f,0.0f,m_zTrans);
     QMatrix4x4 normalMatrix = (m_viewMatrix*m_worldMatrix).inverted().transposed();
