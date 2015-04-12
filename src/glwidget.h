@@ -13,7 +13,6 @@
 
 #include "mesh.h"
 #include "lightcontrol.h"
-#include "trackball.h"
 
 class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions
 {
@@ -62,11 +61,6 @@ private:
     GLfloat m_zTrans;
     GLfloat m_xRot;
     GLfloat m_yRot;
-
-    QVector3D rotationAxis;
-    qreal m_angle;
-    QQuaternion rotation;
-    TrackBall m_trackBall;
 
     Mesh *m_mesh;
     LightControl *m_lightControl;

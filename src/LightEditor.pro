@@ -21,8 +21,7 @@ SOURCES += main.cpp \
     testreader.cpp \
     process_mesh.cpp \
     lightcontrol.cpp \
-    clickablelabel.cpp \
-    trackball.cpp
+    clickablelabel.cpp
 
 HEADERS  += mainwindow.h \
     glwidget.h \
@@ -32,8 +31,7 @@ HEADERS  += mainwindow.h \
     testreader.h \
     process_mesh.h \
     lightcontrol.h \
-    clickablelabel.h \
-    trackball.h
+    clickablelabel.h
 
 # FORMS    += mainwindow.ui
 

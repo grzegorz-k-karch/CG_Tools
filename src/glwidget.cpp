@@ -20,9 +20,6 @@ GLWidget::GLWidget(QWidget *parent) :
     m_lightControl = new LightControl;
 
     m_zTrans = -3.0f;
-    m_angle = 0.0;
-
-    m_trackBall = TrackBall(TrackBall::Sphere);
 }
 
 GLWidget::~GLWidget()
@@ -117,39 +114,22 @@ void GLWidget::initializeGL()
 void GLWidget::mousePressEvent(QMouseEvent *event)
 {
     m_mouseLastPos = event->pos();
-
-    QPointF viewPos;
-    viewPos.setX(double(event->pos().rx())/width()*2.0 - 1.0);
-    viewPos.setY(double(event->pos().ry())/height()*2.0 - 1.0);
-
-    m_trackBall.push(viewPos, QQuaternion());
 }
 
 void GLWidget::mouseReleaseEvent(QMouseEvent *event)
 {
     m_mouseLastPos = event->pos();
-
-    QPointF viewPos;
-    viewPos.setX(double(event->pos().rx())/width()*2.0 - 1.0);
-    viewPos.setY(double(event->pos().ry())/height()*2.0 - 1.0);
-
-    m_trackBall.push(viewPos, QQuaternion());
 }
 
 void GLWidget::mouseMoveEvent(QMouseEvent *event)
 {
     if (event->buttons() & Qt::LeftButton) {
 
-        QVector2D diff = QVector2D(event->pos() - m_mouseLastPos);
-        QVector3D n = QVector3D(diff.y(), diff.x(), 0.0).normalized();
-        rotationAxis = n.normalized();
-        m_angle = diff.length() / 10.0;
+        int dy = event->y() - m_mouseLastPos.y();
+        int dx = event->x() - m_mouseLastPos.x();
 
-        QPointF viewPos;
-        viewPos.setX(double(event->pos().rx())/width()*2.0 - 1.0);
-        viewPos.setY(double(event->pos().ry())/height()*2.0 - 1.0);
-
-        m_trackBall.move(viewPos, QQuaternion());
+        m_xRot += dy*0.25f;
+        m_yRot += dx*0.25f;
     }
     else if (event->buttons() & Qt::RightButton) {
 
@@ -164,7 +144,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
 void GLWidget::resizeGL(int width, int height)
 {
     m_projMatrix.setToIdentity();
-    m_projMatrix.perspective(45.0f, GLfloat(width)/height, 0.01f, 100.0f);
+    m_projMatrix.perspective(45.0f, GLfloat(width)/height, 0.1f, 1000.0f);
 }
 
 void GLWidget::paintGL()
@@ -172,12 +152,13 @@ void GLWidget::paintGL()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
 
-    rotation = QQuaternion::fromAxisAndAngle(rotationAxis, m_angle);
-//    m_worldMatrix.rotate(rotation);
+    m_worldMatrix.setToIdentity();
+    m_worldMatrix.rotate(m_yRot, 0.0f, 1.0f, 0.0f);
+    m_worldMatrix.rotate(m_xRot, 1.0f, 0.0f, 0.0f);
 
-    m_worldMatrix.rotate(m_trackBall.rotation());
     m_viewMatrix.setToIdentity();
     m_viewMatrix.translate(0.0f,0.0f,m_zTrans);
+
     QMatrix4x4 normalMatrix = (m_viewMatrix*m_worldMatrix).inverted().transposed();
 
     m_program.bind();

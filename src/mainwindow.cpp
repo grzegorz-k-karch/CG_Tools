@@ -33,6 +33,7 @@ MainWindow::MainWindow()
     lightColorBox->setFrameStyle(QFrame::StyledPanel | QFrame::Plain);
     lightColorBox->setAutoFillBackground(true);
     lightColorBox->setLineWidth(3);
+    lightColorBox->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
     lightEditorLayout->addWidget(lightColorBox);
 
     lightColorBox->setPalette(*palette);
