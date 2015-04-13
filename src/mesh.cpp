@@ -9,8 +9,8 @@ Mesh::Mesh()
 {
     m_reader = new PlyReader();
 //    m_reader->SetFilename("/home/karchgz/dev/meshes/torus.ply");
-    m_reader->SetFilename("/home/gkk/dev/meshes/dragon.ply");
-    m_reader->ReadObject(m_vertices, m_normals, m_colors, m_indices);
+//    m_reader->SetFilename("/home/gkk/dev/meshes/torus.ply");
+//    m_reader->ReadObject(m_vertices, m_normals, m_colors, m_indices);
 }
 
 Mesh::~Mesh()
@@ -18,8 +18,9 @@ Mesh::~Mesh()
     delete m_reader;
 }
 
-void Mesh::LoadMesh()
+void Mesh::LoadMesh(QString fileName)
 {
+    m_reader->SetFilename(fileName.toStdString());
     m_reader->ReadObject(m_vertices, m_normals,
                          m_colors, m_indices);
 }

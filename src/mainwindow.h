@@ -14,6 +14,9 @@ public:
     explicit MainWindow();
     ~MainWindow();
 
+signals:
+    void fileSelected(QString fileName);
+
 private slots:
     void fileOpen();
 

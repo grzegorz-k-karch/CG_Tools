@@ -4,6 +4,7 @@
 #include <qopengl.h>
 #include <QVector>
 #include <QVector3D>
+#include <QString>
 #include "meshreader.h"
 
 class Mesh
@@ -12,12 +13,13 @@ public:
     Mesh();
     ~Mesh();
 
-    void LoadMesh();
-
     const QVector<GLfloat> &getVertexData() const { return m_vertices; }
     const QVector<GLfloat> &getNormalData() const { return m_normals; }
     const QVector<GLfloat> &getColorData() const { return m_colors; }
     const QVector<GLuint> &getIndexData() const { return m_indices; }
+
+public slots:
+    void LoadMesh(QString fileName);
 
 private:
 

@@ -9,6 +9,7 @@
 #include <QVector4D>
 #include <QMatrix4x4>
 #include <QQuaternion>
+#include <QString>
 #include <string>
 
 #include "mesh.h"
@@ -27,6 +28,10 @@ public:
                      const QVector<GLfloat> &color_data,
                      const QVector<GLuint> &index_data);
     void setLightControl(LightControl *lightControl) { m_lightControl = lightControl; }
+
+public slots:
+    void LoadMesh(QString fileName);
+
 protected:
     void initializeGL() Q_DECL_OVERRIDE;
     void paintGL() Q_DECL_OVERRIDE;

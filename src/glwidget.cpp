@@ -175,3 +175,12 @@ void GLWidget::paintGL()
     m_vertexArray.release();
     m_program.release();
 }
+
+void GLWidget::LoadMesh(QString fileName)
+{
+    m_mesh->LoadMesh(fileName);
+    loadBuffers(m_mesh->getVertexData(),
+                m_mesh->getNormalData(),
+                m_mesh->getColorData(),
+                m_mesh->getIndexData());
+}

@@ -64,6 +64,8 @@ MainWindow::MainWindow()
     fileMenu->addAction(action);
 
     (void)statusBar();
+
+    connect(this, SIGNAL(fileSelected(QString)), glwidget, SLOT(LoadMesh(QString)));
 }
 
 MainWindow::~MainWindow()
@@ -74,6 +76,7 @@ MainWindow::~MainWindow()
 void MainWindow::fileOpen()
 {
     QString fileName = QFileDialog::getOpenFileName(this);
-    if (!fileName.isEmpty())
-        std::cout << "File: " << fileName.toStdString() << std::endl;
+    if (!fileName.isEmpty()) {
+        emit fileSelected(fileName);
+    }
 }
