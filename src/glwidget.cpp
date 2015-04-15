@@ -80,7 +80,6 @@ void GLWidget::loadBuffer(QOpenGLBuffer &buffer,
     buffer.release();
 }
 
-
 void GLWidget::loadBuffers(const QVector<GLfloat> &vertex_data,
                            const QVector<GLfloat> &normal_data,
                            const QVector<GLfloat> &color_data,
@@ -178,7 +177,9 @@ void GLWidget::paintGL()
 
 void GLWidget::LoadMesh(QString fileName)
 {
+    m_mesh->clearMesh();
     m_mesh->LoadMesh(fileName);
+
     loadBuffers(m_mesh->getVertexData(),
                 m_mesh->getNormalData(),
                 m_mesh->getColorData(),

@@ -19,8 +19,16 @@ Mesh::~Mesh()
 }
 
 void Mesh::LoadMesh(QString fileName)
-{
+{    
     m_reader->SetFilename(fileName.toStdString());
     m_reader->ReadObject(m_vertices, m_normals,
                          m_colors, m_indices);
+}
+
+void Mesh::clearMesh()
+{
+    m_vertices.clear();
+    m_normals.clear();
+    m_colors.clear();
+    m_indices.clear();
 }

@@ -18,6 +18,8 @@ public:
     const QVector<GLfloat> &getColorData() const { return m_colors; }
     const QVector<GLuint> &getIndexData() const { return m_indices; }
 
+    void clearMesh();
+
 public slots:
     void LoadMesh(QString fileName);
 
