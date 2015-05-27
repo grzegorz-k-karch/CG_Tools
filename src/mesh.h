@@ -18,6 +18,8 @@ public:
     const QVector<GLfloat> &getColorData() const { return m_colors; }
     const QVector<GLuint> &getIndexData() const { return m_indices; }
 
+    const QVector<GLfloat> &GetBBox() const { return m_bbox; }
+
     void clearMesh();
 
 public slots:
@@ -29,6 +31,8 @@ private:
     QVector<GLfloat> m_normals;
     QVector<GLfloat> m_colors;
     QVector<GLuint> m_indices;
+
+    QVector<GLfloat> m_bbox;
 
     MeshReader *m_reader;
 };

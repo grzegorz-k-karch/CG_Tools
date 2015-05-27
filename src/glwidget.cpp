@@ -7,6 +7,7 @@
 #include <QString>
 #include <QMouseEvent>
 #include <QPointF>
+#include <cmath>
 
 GLWidget::GLWidget(QWidget *parent) :
     QOpenGLWidget(parent),
@@ -19,7 +20,8 @@ GLWidget::GLWidget(QWidget *parent) :
     m_mesh = new Mesh;
     m_lightControl = new LightControl;
 
-    m_zTrans = -3.0f;
+    m_zTrans = -2.0f;
+    m_viewAngle = 45.0f;
 }
 
 GLWidget::~GLWidget()
@@ -143,7 +145,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
 void GLWidget::resizeGL(int width, int height)
 {
     m_projMatrix.setToIdentity();
-    m_projMatrix.perspective(45.0f, GLfloat(width)/height, 0.1f, 1000.0f);
+    m_projMatrix.perspective(m_viewAngle, GLfloat(width)/height, 0.1f, 1000.0f);
 }
 
 void GLWidget::paintGL()
@@ -152,8 +154,8 @@ void GLWidget::paintGL()
     glEnable(GL_DEPTH_TEST);
 
     m_worldMatrix.setToIdentity();
-    m_worldMatrix.rotate(m_yRot, 0.0f, 1.0f, 0.0f);
     m_worldMatrix.rotate(m_xRot, 1.0f, 0.0f, 0.0f);
+    m_worldMatrix.rotate(m_yRot, 0.0f, 1.0f, 0.0f);
 
     m_viewMatrix.setToIdentity();
     m_viewMatrix.translate(0.0f,0.0f,m_zTrans);
@@ -184,4 +186,16 @@ void GLWidget::LoadMesh(QString fileName)
                 m_mesh->getNormalData(),
                 m_mesh->getColorData(),
                 m_mesh->getIndexData());
+
+    const QVector<GLfloat> &bbox = m_mesh->GetBBox();
+    float h = std::max(std::abs(bbox[2]),std::abs(bbox[3]));
+    float w = std::max(std::abs(bbox[0]),std::abs(bbox[1]));
+
+    float zTrans_vert = -bbox[5] - h/std::tan(m_viewAngle*M_PI/180.0f/2.0f);
+
+    float horiAngle = std::atan(float(this->width())/this->height());
+    float zTrans_hori = -bbox[5] - w/std::tan(horiAngle/2.0f);
+
+    m_zTrans = zTrans_hori < zTrans_vert ? zTrans_hori : zTrans_vert;
+    update();
 }

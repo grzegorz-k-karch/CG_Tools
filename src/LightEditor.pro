@@ -45,3 +45,5 @@ else:unix: LIBS += -L$$PWD/ply/build/ -lply
 
 INCLUDEPATH += $$PWD/ply
 DEPENDPATH += $$PWD/ply
+
+QMAKE_CXXFLAGS += -std=c++11

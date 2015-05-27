@@ -66,6 +66,7 @@ private:
     GLfloat m_zTrans;
     GLfloat m_xRot;
     GLfloat m_yRot;
+    GLfloat m_viewAngle;
 
     Mesh *m_mesh;
     LightControl *m_lightControl;
