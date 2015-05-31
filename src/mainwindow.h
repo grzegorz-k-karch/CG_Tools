@@ -21,9 +21,7 @@ private slots:
     void fileOpen();
 
 private:
-    GLWidget *glwidget;
-    QMenu *fileMenu;
-    QMenu *helpMenu;
+
 };
 
 #endif // MAINWINDOW_H

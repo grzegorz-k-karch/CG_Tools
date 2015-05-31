@@ -1,6 +1,8 @@
 #include "glwidget.h"
 #include "helper_glsl.h"
 #include "lightcontrol.h"
+#include "meshreader.h"
+#include "plyreader.h"
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -61,6 +63,8 @@ const QString LoadShaderText(const std::string filename)
   QString shaderText;
   std::ifstream file(filename.c_str());
   std::string line;
+
+  std::cout << "shader " << filename << std::endl;
 
   if (file.good()) {
     // read the shader file line by line
@@ -179,8 +183,18 @@ void GLWidget::paintGL()
 
 void GLWidget::LoadMesh(QString fileName)
 {
+    MeshReader *reader = new PlyReader();
+    reader->SetFilename(fileName.toStdString());
+
+    QVector<GLfloat> vertices;
+    QVector<GLfloat> normals;
+    QVector<GLfloat> colors;
+    QVector<GLuint> indices;
+    reader->ReadObject(vertices, normals, colors, indices);
+    delete reader;
+
     m_mesh->clearMesh();
-    m_mesh->LoadMesh(fileName);
+    m_mesh->Init(vertices, normals, colors, indices);
 
     loadBuffers(m_mesh->getVertexData(),
                 m_mesh->getNormalData(),

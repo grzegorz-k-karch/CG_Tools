@@ -10,8 +10,17 @@
 class Mesh
 {
 public:
+    Mesh(QVector<GLfloat> &vertices,
+         QVector<GLfloat> &normals,
+         QVector<GLfloat> &colors,
+         QVector<GLuint> &indices);
     Mesh();
     ~Mesh();
+
+    void Init(QVector<GLfloat> &vertices,
+              QVector<GLfloat> &normals,
+              QVector<GLfloat> &colors,
+              QVector<GLuint> &indices);
 
     const QVector<GLfloat> &getVertexData() const { return m_vertices; }
     const QVector<GLfloat> &getNormalData() const { return m_normals; }
@@ -21,9 +30,7 @@ public:
     const QVector<GLfloat> &GetBBox() const { return m_bbox; }
 
     void clearMesh();
-
-public slots:
-    void LoadMesh(QString fileName);
+    void computeBBox();
 
 private:
 
@@ -33,8 +40,6 @@ private:
     QVector<GLuint> m_indices;
 
     QVector<GLfloat> m_bbox;
-
-    MeshReader *m_reader;
 };
 
 #endif // MESH_H
